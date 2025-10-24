@@ -76,13 +76,13 @@ Mern_Blog-app/
 ## 🖼 Screenshots
 
 **🏠 Home Page**  
-![Home page](./client/screenshots/Home.png)
+![Home page](./screenshots/Home.png)
 
 **✏️ Update Page**  
-![Update page](./client/screenshots/Update.png)
+![Update page](./screenshots/Update.png)
 
 **💬 Comments Section**  
-![Comments](./client/screenshots/Comments.png)
+![Comments](./screenshots/Comments.png)
 
 🧑‍💻 Developer Notes
 
