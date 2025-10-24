@@ -50,7 +50,7 @@ npm run dev
 Frontend runs on http://localhost:5173
 
 🧩 Folder Structure
-```
+
 Mern_Blog-app/
 ├── client/                 # React Frontend
 │   ├── src/
@@ -73,8 +73,16 @@ Mern_Blog-app/
 └── README.md
 
 
-🖼️ Screenshots
-./screenshots/Home.png
+## 🖼 Screenshots
+
+**🏠 Home Page**  
+![Home page](./screenshots/Home.png)
+
+**✏️ Update Page**  
+![Update page](./screenshots/Update.png)
+
+**💬 Comments Section**  
+![Comments](./screenshots/Comments.png)
 
 🧑‍💻 Developer Notes
 
