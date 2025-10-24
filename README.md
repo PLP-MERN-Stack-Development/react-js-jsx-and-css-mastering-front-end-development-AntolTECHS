@@ -18,7 +18,6 @@ It includes a working **dark/light theme toggle** and clean UI best practices.
 ### 🌙 Dark Mode
 ![Dark Mode Screenshot](./screenshots/dark-mode.png)
 
-*(Create a folder named `screenshots/` in your project root and place your images there.)*
 
 ---
 
