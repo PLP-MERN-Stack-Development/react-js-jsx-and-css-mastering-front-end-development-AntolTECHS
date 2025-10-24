@@ -1,50 +1,78 @@
 import { useState } from "react";
-import API from "../services/api";
 import { useNavigate } from "react-router-dom";
+import API from "../api";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("categoryId", categoryId);
+    if (file) formData.append("image", file); // must match backend
+
     try {
-      await API.post("/posts", { title, content });
+      setLoading(true);
+      await API.post("/posts", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      alert("Post created!");
       navigate("/");
     } catch (err) {
-      console.error("Error creating post:", err);
+      console.error(err);
+      alert("Create failed: " + (err.response?.data?.error || err.message));
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-lg mx-auto bg-white shadow p-6 rounded"
-    >
-      <h2 className="text-xl font-semibold mb-4">Create New Post</h2>
-      <input
-        type="text"
-        placeholder="Post title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className="w-full border p-2 rounded mb-4"
-        required
-      />
-      <textarea
-        placeholder="Post content"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        className="w-full border p-2 rounded mb-4"
-        rows="6"
-        required
-      />
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        Save Post
-      </button>
-    </form>
+    <div className="p-4">
+      <h2 className="text-2xl mb-4">Create Post</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="text"
+          placeholder="Title"
+          className="border p-2 w-full"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <textarea
+          placeholder="Content"
+          className="border p-2 w-full h-40"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
+        <select
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
+          className="border p-2 w-full"
+        >
+          <option value="">-- choose category --</option>
+          <option value="tech">Tech</option>
+          <option value="life">Life</option>
+        </select>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files[0])}
+          className="border p-2 w-full"
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          {loading ? "Saving..." : "Save"}
+        </button>
+      </form>
+    </div>
   );
 }
